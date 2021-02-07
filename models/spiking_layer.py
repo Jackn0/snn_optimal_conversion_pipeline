@@ -6,7 +6,7 @@ import torch.nn as nn
 from .settings import *
 
 
-# spike layer, requires nn.Conv2d and thresh
+# spike layer, requires nn.Conv2d (nn.Linear) and thresh
 class SPIKE_layer(nn.Module):
     def __init__(self, thresh, Conv2d):
         super(SPIKE_layer, self).__init__()
