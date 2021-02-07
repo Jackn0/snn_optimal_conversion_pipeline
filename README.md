@@ -13,7 +13,7 @@ We suggest using file 'main_train.py' for training and file 'main_simulation.py'
 * 'models/new_relu.py' : threshold ReLU file
 
 # Pre-trained models
-* All the pre-trained models we used are avilable [here](https://drive.google.com/drive/folders/1JAAtdOTcmbfv732aRlqsdL7-_05Tdemu?usp=sharing)
+* All the pre-trained models we used are avilabled [here](https://drive.google.com/drive/folders/1JAAtdOTcmbfv732aRlqsdL7-_05Tdemu?usp=sharing)
 
 # Issues
 * Consider the generalization, when T is large, the loss and accuracy of SNN may both decrease.
