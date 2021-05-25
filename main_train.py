@@ -69,26 +69,31 @@ def lr_scheduler(optimizer, epoch):
     return optimizer
 
 
-best_acc = 0
-best_epoch = 0
 
-if args.arch == 'CNN2':
-    ann = CNN(True)
-elif args.arch == 'CIFARNet':
-    pass
-elif args.arch == 'VGG16':
-    pass
-elif args.arch == 'ResNet20':
-    pass
-else:
-    print('Unkonwn network')
-    ann = CNN(True)
-
-ann.to(device)
-criterion = nn.CrossEntropyLoss()
-# optimizer = torch.optim.Adam(ann.parameters(), lr=learning_rate)
-optimizer = torch.optim.SGD(ann.parameters(), lr=learning_rate, momentum=0.9, weight_decay=5e-4)
 if __name__ == "__main__":
+    
+    best_acc = 0
+    best_epoch = 0
+    
+    
+    criterion = nn.CrossEntropyLoss()
+    # optimizer = torch.optim.Adam(ann.parameters(), lr=learning_rate)
+    optimizer = torch.optim.SGD(ann.parameters(), lr=learning_rate, momentum=0.9, weight_decay=5e-4)
+    
+    if args.thresh > 0:
+        relu_th = True
+    else:
+        relu_th = False
+    # use threshold ReLU
+    print(args.arch)
+    if args.arch == 'VGG16':
+        ann = VGG16(relu_th)
+    elif args.arch == 'ResNet20':
+        ann = ResNet20(relu_th)
+    else:
+        ann = CIFARNet(relu_th)
+    ann.to(device)
+    
     train_loader, test_loader = dataset()
     for epoch in range(num_epochs):
         running_loss = 0
