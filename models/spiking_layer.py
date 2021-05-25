@@ -17,7 +17,7 @@ class SPIKE_layer(nn.Module):
             self.shift = self.thresh / (2 * args.shift_snn)
         else:
             self.shift = 0
-        self.shift_operation()
+        # self.shift_operation()
 
     # Initialize the membrane potential
     def init_mem(self):
