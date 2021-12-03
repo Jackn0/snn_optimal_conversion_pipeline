@@ -76,9 +76,6 @@ if __name__ == "__main__":
     best_epoch = 0
     
     
-    criterion = nn.CrossEntropyLoss()
-    # optimizer = torch.optim.Adam(ann.parameters(), lr=learning_rate)
-    optimizer = torch.optim.SGD(ann.parameters(), lr=learning_rate, momentum=0.9, weight_decay=5e-4)
     
     if args.thresh > 0:
         relu_th = True
@@ -92,7 +89,12 @@ if __name__ == "__main__":
         ann = ResNet20(relu_th)
     else:
         ann = CIFARNet(relu_th)
+    ann = torch.nn.DataParallel(ann)
     ann.to(device)
+    
+    criterion = nn.CrossEntropyLoss()
+    # optimizer = torch.optim.Adam(ann.parameters(), lr=learning_rate)
+    optimizer = torch.optim.SGD(ann.parameters(), lr=learning_rate, momentum=0.9, weight_decay=5e-4)
     
     train_loader, test_loader = dataset()
     for epoch in range(num_epochs):
@@ -139,7 +141,7 @@ if __name__ == "__main__":
         if best_acc < acc and epoch > args.init_epoch:
             best_acc = acc
             best_epoch = epoch + 1
-            torch.save(ann.state_dict(), model_save_name)
+            torch.save(ann.module.state_dict(), model_save_name)
             best_max_act = ann.record()
             # np.save(activation_save_name, best_max_act)
         print('best_acc is: ', best_acc, ' find in epoch: ', best_epoch)
